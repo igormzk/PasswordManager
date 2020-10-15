@@ -3,7 +3,7 @@ package com.imeg.passwordmanager.model;
 public class Spot {
 
     private int id;
-    private String desc;
+    private String description;
     private String login;
     private String password;
 
@@ -15,12 +15,12 @@ public class Spot {
         this.id = id;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLogin() {

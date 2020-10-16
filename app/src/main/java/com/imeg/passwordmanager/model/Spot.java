@@ -38,4 +38,9 @@ public class Spot {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Descrição: " + description + "\n" + "Login: " + login + "\n" + "Senha: " + password;
+    }
 }

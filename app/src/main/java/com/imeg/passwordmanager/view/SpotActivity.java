@@ -44,8 +44,21 @@ public class SpotActivity extends AppCompatActivity {
         s.setPassword(txtPassword.getText().toString());
         SQLiteManager sql = new SQLiteManager(this);
         sql.open();
-        String result = sql.saveSpot(s);
+        long result = sql.saveSpot(s);
         sql.close();
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+        String str;
+        if (result == -1) {
+            str = "Erro ao inserir registro";
+        } else {
+            str = "Registro inserido com sucesso";
+        }
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+        clearFields();
+    }
+
+    private void clearFields() {
+        txtDescription.setText("");
+        txtLogin.setText("");
+        txtPassword.setText("");
     }
 }

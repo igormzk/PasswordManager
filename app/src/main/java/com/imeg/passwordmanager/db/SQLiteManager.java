@@ -53,7 +53,7 @@ public class SQLiteManager {
         dbHelper.close();
     }
 
-    public String saveSpot(Spot spot) {
+    public long saveSpot(Spot spot) {
         long result = -1;
         try {
             dataBase = dbHelper.getWritableDatabase();
@@ -66,11 +66,7 @@ public class SQLiteManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (result == -1) {
-            return "Erro ao inserir registro";
-        } else {
-            return "Registro inserido com sucesso";
-        }
+       return result;
     }
 
     public List<Spot> loadSpot() {
@@ -94,14 +90,8 @@ public class SQLiteManager {
         return list;
     }
 
-    public String deleteSpot(int id) {
-        long result = -1;
+    public long deleteSpot(int id) {
         dataBase = dbHelper.getWritableDatabase();
-        result = dataBase.delete(TBL_SPOT, "id = " + id, null);
-        if (result == -1) {
-            return "Erro ao deletar senha";
-        } else {
-            return "Senha excluída!";
-        }
+        return dataBase.delete(TBL_SPOT, "id = " + id, null);
     }
 }

@@ -9,6 +9,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +25,7 @@ import com.imeg.passwordmanager.R;
 import com.imeg.passwordmanager.db.SQLiteManager;
 import com.imeg.passwordmanager.model.Spot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpotViewActivity extends AppCompatActivity {
@@ -36,9 +41,13 @@ public class SpotViewActivity extends AppCompatActivity {
         SQLiteManager sql = new SQLiteManager(this);
         sql.open();
         final List<Spot> listSpot = sql.loadSpot();
+        final List listDisplay = new ArrayList();
+        for (Spot s : listSpot) {
+            listDisplay.add(s.toString());
+        }
         sql.close();
 
-        final ArrayAdapter<Spot> listAdapterSpot = new ArrayAdapter<Spot>(this, android.R.layout.simple_list_item_1, listSpot){
+        final ArrayAdapter<Spot> listAdapterSpot = new ArrayAdapter<Spot>(this, android.R.layout.simple_list_item_1, listDisplay){
 
             @NonNull
             @Override
@@ -49,6 +58,10 @@ public class SpotViewActivity extends AppCompatActivity {
                 if (position % 2 == 0) {
                     ((TextView)convertView).setBackgroundColor(Color.argb(255, 219,219,219));
                 }
+                Spannable word = new SpannableString(listDisplay.get(position).toString());
+                word.setSpan(new ForegroundColorSpan(Color.BLUE), 0, word.toString().split("\n")[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                listDisplay.set(position, word);
+
                 return super.getView(position, convertView, parent);
             }
         };
@@ -61,6 +74,7 @@ public class SpotViewActivity extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                 alert.setTitle("Excluir");
                 final Spot spot = listSpot.get(i);
+                final Object obj = listDisplay.get(i);
                 alert.setMessage("Quer deletar a senha " + spot.getDescription() + "?");
                 alert.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
@@ -77,6 +91,7 @@ public class SpotViewActivity extends AppCompatActivity {
                         }
                         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
                         listSpot.remove(spot);
+                        listDisplay.remove(obj);
                         listAdapterSpot.notifyDataSetChanged();
 
                     }

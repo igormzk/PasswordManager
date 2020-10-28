@@ -57,6 +57,8 @@ public class SpotViewActivity extends AppCompatActivity {
                 }
                 if (position % 2 == 0) {
                     ((TextView)convertView).setBackgroundColor(Color.argb(255, 219,219,219));
+                } else {
+                    ((TextView)convertView).setBackgroundColor(Color.argb(255, 255, 255, 255));
                 }
                 Spannable word = new SpannableString(listDisplay.get(position).toString());
                 word.setSpan(new ForegroundColorSpan(Color.BLUE), 0, word.toString().split("\n")[0].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

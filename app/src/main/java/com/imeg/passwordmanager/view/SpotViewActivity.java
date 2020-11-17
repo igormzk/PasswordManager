@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import java.util.List;
 
 public class SpotViewActivity extends AppCompatActivity {
 
+    private SearchView searchSpot;
     private ListView listView;
     private Context context;
     @Override
@@ -38,6 +40,7 @@ public class SpotViewActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_spot_view);
         listView = findViewById(R.id.listView);
+        searchSpot = findViewById(R.id.searchSpot);
         SQLiteManager sql = new SQLiteManager(this);
         sql.open();
         final List<Spot> listSpot = sql.loadSpot();
@@ -69,6 +72,24 @@ public class SpotViewActivity extends AppCompatActivity {
         };
 
         listView.setAdapter(listAdapterSpot);
+
+        searchSpot.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (listDisplay.contains(query)) {
+                    listAdapterSpot.getFilter().filter(query);
+                } else  {
+
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listAdapterSpot.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

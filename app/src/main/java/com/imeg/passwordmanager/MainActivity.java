@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnViewSpot = findViewById(R.id.btnViewSpot);
         btnNewSpot = findViewById(R.id.btnNewSpot);
-        btnNewSpot.setEnabled(false);
-        btnViewSpot.setEnabled(false);
+//        btnNewSpot.setEnabled(false);
+//        btnViewSpot.setEnabled(false);
 
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {

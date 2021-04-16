@@ -33,14 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnViewSpot = findViewById(R.id.btnViewSpot);
         btnNewSpot = findViewById(R.id.btnNewSpot);
-//        btnNewSpot.setEnabled(false);
-//        btnViewSpot.setEnabled(false);
+        btnNewSpot.setEnabled(false);
+        btnViewSpot.setEnabled(false);
 
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
+                btnNewSpot.setEnabled(false);
+                btnViewSpot.setEnabled(false);
                 Toast.makeText(getApplicationContext(), "Erro na autenticação: " + errString, Toast.LENGTH_LONG).show();
             }
 
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
+                btnViewSpot.setEnabled(false);
+                btnViewSpot.setEnabled(false);
                 Toast.makeText(getApplicationContext(), "Falha na autenticação.", Toast.LENGTH_LONG).show();
             }
         });

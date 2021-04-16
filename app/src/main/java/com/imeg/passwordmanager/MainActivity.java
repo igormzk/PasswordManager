@@ -40,25 +40,27 @@ public class MainActivity extends AppCompatActivity {
         biometricPrompt = new BiometricPrompt(MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
                 btnNewSpot.setEnabled(false);
                 btnViewSpot.setEnabled(false);
+                super.onAuthenticationError(errorCode, errString);
+
                 Toast.makeText(getApplicationContext(), "Erro na autenticação: " + errString, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
                 btnNewSpot.setEnabled(true);
                 btnViewSpot.setEnabled(true);
+                super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(), "Autenticação correta!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAuthenticationFailed() {
+                btnViewSpot.setEnabled(false);
+                btnViewSpot.setEnabled(false);
                 super.onAuthenticationFailed();
-                btnViewSpot.setEnabled(false);
-                btnViewSpot.setEnabled(false);
+
                 Toast.makeText(getApplicationContext(), "Falha na autenticação.", Toast.LENGTH_LONG).show();
             }
         });
